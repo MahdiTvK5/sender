@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base text-slate-100 antialiased;
+    font-family: var(--font-vazir), "Tahoma", sans-serif;
+    min-height: 100vh;
+    background-color: #0d1117;
+  }
+
+  /* Light theme overrides */
+  html.light body {
+    @apply bg-slate-100 text-slate-900;
+    background-color: #eef2ff;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.4);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  html.light .glass {
+    @apply border-black/5 bg-white/70;
+    box-shadow: 0 8px 40px rgba(99, 102, 241, 0.12);
+  }
+
+  .glass-input {
+    @apply w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-accent-purple/60 focus:shadow-glow;
+  }
+
+  html.light .glass-input {
+    @apply border-black/10 bg-white/60 text-slate-900 placeholder:text-slate-400;
+  }
+
+  .btn-gradient {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-2xl bg-purple-gradient px-6 py-3 text-sm font-bold text-white shadow-glow transition-all duration-300;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-medium text-slate-200 transition-all duration-300 hover:border-accent-cyan/50 hover:text-white;
+  }
+
+  html.light .btn-ghost {
+    @apply border-black/10 bg-black/[0.02] text-slate-700 hover:text-slate-900;
+  }
+
+  .gradient-text {
+    @apply bg-purple-gradient bg-clip-text text-transparent;
+  }
+
+  .neon-code {
+    @apply gradient-text font-black tracking-[0.25em];
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.55);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8b5cf6, #d946ef);
+  border-radius: 999px;
+}
