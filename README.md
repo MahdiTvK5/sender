@@ -120,6 +120,81 @@ Table `configs`:
 - **Unique index** on `code` guarantees uniqueness even under concurrency; generation retries on collision.
 - Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`).
 
+## 🚢 استقرار روی سرور (VPS + PM2 + Nginx)
+
+<div dir="rtl">
+
+روش پیشنهادی برای این پروژه (چون از SQLite استفاده می‌کند و به دیسک پایدار نیاز دارد).
+
+</div>
+
+```bash
+# 1) پیش‌نیازها (Ubuntu/Debian)
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt-get install -y nodejs git build-essential nginx
+sudo npm install -g pm2
+
+# 2) گرفتن کد و نصب
+git clone https://github.com/MahdiTvK5/sender.git
+cd sender
+npm install
+
+# 3) تنظیمات محیطی
+cp .env.example .env
+nano .env        # NEXT_PUBLIC_BASE_URL و DATABASE_PATH را تنظیم کنید
+sudo mkdir -p /var/lib/config-share && sudo chown $USER:$USER /var/lib/config-share
+
+# 4) build و اجرا با PM2
+npm run build
+pm2 start ecosystem.config.cjs
+pm2 save
+pm2 startup       # دستور چاپ‌شده را اجرا کنید تا بعد از ری‌استارت خودکار بالا بیاید
+```
+
+سپس Nginx را به‌عنوان reverse proxy تنظیم کنید (`/etc/nginx/sites-available/config-share`):
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+```bash
+sudo ln -s /etc/nginx/sites-available/config-share /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# HTTPS رایگان
+sudo apt-get install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d your-domain.com
+```
+
+**به‌روزرسانی نسخه:**
+
+```bash
+git pull && npm install && npm run build && pm2 restart config-share
+```
+
+> هدرهای `X-Forwarded-For` و `X-Forwarded-Proto` را در Nginx حفظ کنید؛ rate limiting و ساخت لینک با `https` به آن‌ها متکی است.
+
+### گزینه جایگزین: Docker
+
+```bash
+docker build -t config-share .
+docker run -d -p 3000:3000 -v config_data:/app/data --name config-share config-share
+```
+
 ## 📁 Project Structure
 
 ```
