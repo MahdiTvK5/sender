@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}کانفیگ {{ code }} · پلتفرم ارسال کانفیگ{% endblock %}
+
+{% block content %}
+<main class="container">
+  <div class="topbar">
+    <a href="/" class="btn btn-ghost">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <span class="btn-label">صفحه اصلی</span>
+    </a>
+    <button id="theme-toggle" class="btn btn-ghost btn-icon" type="button" aria-label="تغییر حالت روشن/تاریک">
+      <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+
+  <section class="card fade-in">
+    <div class="card-head">
+      <span class="card-icon grad-purple">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4 6a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+      </span>
+      <div>
+        <h1 class="card-title">کانفیگ اشتراکی</h1>
+        <p class="card-desc">کد <span class="grad-text" dir="ltr">{{ code }}</span></p>
+      </div>
+    </div>
+
+    <div class="viewer-grid">
+      <div class="viewer-info">
+        <div class="timer-box">
+          <p class="mini-label">زمان باقی‌مانده تا انقضا</p>
+          <div class="countdown" data-countdown="{{ expires_at }}" data-expire-reload="1">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span class="countdown-value" dir="ltr">--:--:--</span>
+          </div>
+        </div>
+        <div class="date-grid">
+          <div class="date-cell">
+            <p class="mini-label">ایجاد شده در</p>
+            <p class="date-value" data-datetime="{{ created_at }}">—</p>
+          </div>
+          <div class="date-cell">
+            <p class="mini-label">انقضا در</p>
+            <p class="date-value" data-datetime="{{ expires_at }}">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="qr-wrap">
+        <div class="qr-box">
+          <img src="{{ qr }}" alt="QR code لینک اشتراک" width="176" height="176" />
+        </div>
+        <p class="mini-label center">اسکن برای اشتراک‌گذاری</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <label class="label">محتوای کانفیگ</label>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="{{ config }}" data-copy-label="کپی کانفیگ">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span class="btn-label">کپی کانفیگ</span>
+        </button>
+      </div>
+      <pre class="config-view" dir="ltr">{{ config }}</pre>
+    </div>
+
+    <div class="field">
+      <label class="label">لینک مستقیم اشتراک</label>
+      <div class="copy-row">
+        <input class="input mono" dir="ltr" readonly value="{{ share_link }}" onfocus="this.select()" />
+        <button class="btn btn-ghost btn-icon" type="button" data-copy="{{ share_link }}" data-copy-label="کپی لینک">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-ghost" type="button" data-copy="{{ config }}" data-copy-label="کپی کانفیگ">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <span class="btn-label">کپی کانفیگ</span>
+      </button>
+      <button class="btn btn-ghost" type="button" data-copy="{{ share_link }}" data-copy-label="کپی لینک">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span class="btn-label">کپی لینک</span>
+      </button>
+    </div>
+  </section>
+</main>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ message }} · پلتفرم ارسال کانفیگ{% endblock %}
+
+{% block content %}
+<main class="container center-screen">
+  <div class="topbar topbar-abs">
+    <a href="/" class="btn btn-ghost">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <span class="btn-label">صفحه اصلی</span>
+    </a>
+    <button id="theme-toggle" class="btn btn-ghost btn-icon" type="button" aria-label="تغییر حالت روشن/تاریک">
+      <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+
+  <div class="card state-card fade-in">
+    <span class="state-icon {{ 'state-warn' if kind == 'expired' else 'state-error' }}">
+      {% if kind == 'expired' %}
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4"/><path d="M12 14v-4"/><circle cx="12" cy="14" r="8"/><path d="m2 2 20 20" opacity="0"/></svg>
+      {% else %}
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/><path d="m8 11 6 0"/></svg>
+      {% endif %}
+    </span>
+    <p class="state-message {{ 'state-warn-text' if kind == 'expired' else 'state-error-text' }}">{{ message }}</p>
+    <a href="/" class="btn btn-gradient">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      <span class="btn-label">بازگشت به صفحه اصلی</span>
+    </a>
+  </div>
+</main>
+{% endblock %}

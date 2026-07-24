@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container">
+  <div class="topbar">
+    <span class="badge">
+      <span class="dot dot-cyan pulse"></span>
+      آنلاین · بدون نیاز به ورود
+    </span>
+    <button id="theme-toggle" class="btn btn-ghost btn-icon" type="button" aria-label="تغییر حالت روشن/تاریک">
+      <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+  </div>
+
+  <header class="hero fade-in">
+    <div class="hero-icon float">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+    </div>
+    <h1 class="hero-title glow-text">پلتفرم ارسال کانفیگ</h1>
+    <p class="hero-sub">کانفیگ خود را بارگذاری کرده و لینک اشتراک بسازید.</p>
+  </header>
+
+  <!-- Generator -->
+  <section class="card fade-in">
+    <div class="card-head">
+      <span class="card-icon grad-purple">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4M19 14v4M10 2v2M7 8H3M21 16h-4M11 3H9"/></svg>
+      </span>
+      <div>
+        <h2 class="card-title">سازنده لینک هوشمند</h2>
+        <p class="card-desc">کانفیگ خود را وارد کنید و لینک اختصاصی بگیرید.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <textarea id="config-input" class="input textarea" dir="ltr" rows="7" placeholder="کانفیگ خود را وارد کنید..."></textarea>
+      <div class="field-meta">
+        <span id="char-count">۰ کاراکتر</span>
+        <span class="meta-note">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.34A5 5 0 1 1 12 15"/><path d="m12 2 1.5 3 3 1.5-3 1.5L12 11l-1.5-3L7.5 6.5l3-1.5z"/></svg>
+          اعتبار ۲۴ ساعته
+        </span>
+      </div>
+    </div>
+
+    <button id="generate-btn" class="btn btn-gradient btn-block-sm" type="button">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.9 3.8 3.8 1.9-3.8 1.9L12 14l-1.9-3.4L6.3 8.7l3.8-1.9z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></svg>
+      <span class="btn-label">ساخت لینک هوشمند</span>
+    </button>
+
+    <div id="result" class="result"></div>
+  </section>
+
+  <!-- Receive -->
+  <section class="card fade-in">
+    <div class="card-head">
+      <span class="card-icon grad-cyan">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+      </span>
+      <div>
+        <h2 class="card-title">دریافت کانفیگ</h2>
+        <p class="card-desc">کد ۵ رقمی را وارد کنید تا کانفیگ نمایش داده شود.</p>
+      </div>
+    </div>
+
+    <div class="receive-row">
+      <div class="input-wrap">
+        <svg class="icon input-adorn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 18.5A2.5 2.5 0 0 1 5 16h14a2.5 2.5 0 0 1 0 5H5a2.5 2.5 0 0 1-2.5-2.5z" opacity="0"/><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.5 12.5 8-8"/><path d="m16 6 2 2M18.5 3.5 21 6"/></svg>
+        <input id="receive-input" class="input input-code" dir="ltr" inputmode="numeric" maxlength="5" placeholder="کد ۵ رقمی را وارد کنید" />
+      </div>
+      <button id="receive-btn" class="btn btn-gradient" type="button">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        <span class="btn-label">دریافت کانفیگ</span>
+      </button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>ساخته شده با FastAPI · لینک‌ها پس از ۲۴ ساعت منقضی می‌شوند.</p>
+  </footer>
+</main>
+{% endblock %}
